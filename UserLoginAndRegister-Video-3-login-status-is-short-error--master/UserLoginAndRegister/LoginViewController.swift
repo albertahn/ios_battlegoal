@@ -58,22 +58,23 @@ class LoginViewController: UIViewController {
             var err: NSError?
             var json = NSJSONSerialization.JSONObjectWithData(data, options: .MutableContainers, error: &err) as? NSDictionary
             
-            /////////////////// core data saving
+            
+            /* core data saving */
             var managedObjectContext =
             (UIApplication.sharedApplication().delegate
                 as! AppDelegate).managedObjectContext
 
             
             var entityDescription =
-            NSEntityDescription.entityForName("UserInfo",
+            NSEntityDescription.entityForName("Memberinfo",
                 inManagedObjectContext: managedObjectContext!)
             
-            var userinfo = UserInfo(entity: entityDescription!,
+            var memberinfo = Memberinfo(entity: entityDescription!,
                 insertIntoManagedObjectContext: managedObjectContext)
             
-            userinfo.email = userEmail
+            memberinfo.email = userEmail
             
-            if(userinfo.email != "")
+            if(memberinfo.email != "")
             {
                 // Login is successfull
                 NSUserDefaults.standardUserDefaults().setBool(true, forKey: "isUserLoggedIn")
@@ -84,7 +85,7 @@ class LoginViewController: UIViewController {
 
             print("whether user is logged in:  ")
             println(NSUserDefaults.standardUserDefaults().boolForKey("isUserLoggedIn"))
-         //   println("dfsef:  " + userinfo.email)
+         
             
 
             
@@ -98,12 +99,15 @@ class LoginViewController: UIViewController {
                 
                 var md5password: String = parseJSON["password"] as! String!
                 
-                userinfo.password = md5password
+                memberinfo.password = md5password
                 
                 var profile_picture: String = parseJSON["profile_picture"] as! String!
                 
-                userinfo.profilepicture = profile_picture
+                memberinfo.profilepicture = profile_picture
                 
+                var user_index: String = parseJSON["members_index"] as! String!
+                
+                memberinfo.user_index = user_index
                 
             }
             

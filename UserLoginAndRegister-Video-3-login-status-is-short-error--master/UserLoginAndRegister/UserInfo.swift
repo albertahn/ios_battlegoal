@@ -9,10 +9,12 @@
 import Foundation
 import CoreData
 
-class UserInfo: NSManagedObject {
+class Memberinfo: NSManagedObject {
 
     @NSManaged var email: String
     @NSManaged var password: String
     @NSManaged var profilepicture: String
+    @NSManaged var user_index: String
+    
 
 }

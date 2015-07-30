@@ -12,11 +12,6 @@ import CoreData
 
 class ViewController: UIViewController {
     
-    let managedObjectContext =
-    (UIApplication.sharedApplication().delegate
-        as! AppDelegate).managedObjectContext
-    
-  
     
     
    
@@ -44,10 +39,10 @@ class ViewController: UIViewController {
         
         
         var entityDescription =
-        NSEntityDescription.entityForName("UserInfo",
+        NSEntityDescription.entityForName("Memberinfo",
             inManagedObjectContext: managedObjectContext!)
         
-       /* var userinfo = UserInfo(entity: entityDescription!,
+       /* var memberinfo = Memberinfo(entity: entityDescription!,
             insertIntoManagedObjectContext: managedObjectContext)*/
         
         
@@ -87,10 +82,35 @@ class ViewController: UIViewController {
         }//results
         
         
-        //println("userinfo.email: " + userinfo.email.)
         
         
        
+        
+        
+        
+
+        let commentUrl = NSURL(string: "http://mobile.tanggoal.com/comment/insert_course_comment/")
+        let commentRequest = NSMutableURLRequest(URL: commentUrl!)
+        commentRequest.HTTPMethod = "POST"
+        
+        
+        //
+        let commentPostString = "comment=  &course_index=5271"
+        
+        commentRequest.HTTPBody = commentPostString.dataUsingEncoding(NSUTF8StringEncoding)
+        
+        let task = NSURLSession.sharedSession().dataTaskWithRequest(commentRequest) {
+            data, response, error in
+            
+            if error != nil {
+                println("error=(error)")
+                return
+            }
+            
+            var err: NSError?
+            var json = NSJSONSerialization.JSONObjectWithData(data, options: .MutableContainers, error: &err) as? NSDictionary
+    }
+        
     }
 
     @IBAction func logoutButtonTapped(sender: AnyObject) {
@@ -101,22 +121,24 @@ class ViewController: UIViewController {
         
         
         var entityDescription =
-        NSEntityDescription.entityForName("UserInfo",
+        NSEntityDescription.entityForName("Memberinfo",
             inManagedObjectContext: managedObjectContext!)
         
-        var userinfo = UserInfo(entity: entityDescription!,
+        var memberinfo = Memberinfo(entity: entityDescription!,
             insertIntoManagedObjectContext: managedObjectContext)
         
+        
         //
-        if(userinfo.managedObjectContext != nil) {
-        managedObjectContext?.deleteObject(userinfo)
+        
+        if(memberinfo.managedObjectContext != nil) {
+        managedObjectContext?.deleteObject(memberinfo)
             println("delete:  ")
             
             
         }
         
         
-        let entity = "UserInfo"
+        let entity = "Memberinfo"
         var request = NSFetchRequest(entityName: entity)
         var error: NSError?
         if let entities = managedObjectContext!.executeFetchRequest(
@@ -124,7 +146,7 @@ class ViewController: UIViewController {
             error: &error
             ) as? [NSManagedObject] {
                 for entity in entities {
-                    if let dateString = entity as? UserInfo
+                    if let dateString = entity as? Memberinfo
                     {
                         println("test")
                     } 

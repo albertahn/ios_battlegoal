@@ -13,8 +13,9 @@ import CoreData
 class ViewController: UIViewController {
     
     
+    @IBOutlet weak var send_button: UIButton!
     
-   
+    let sendCommentClass = SendComment()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -25,6 +26,15 @@ class ViewController: UIViewController {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
+    
+    
+    
+    @IBAction func sendAction(sender: UIButton) {
+        
+        
+        sendCommentClass.sendCommentToServer("coke my dick")
+    }
+    
     
     override func viewDidAppear(animated: Bool) {
         
@@ -37,18 +47,18 @@ class ViewController: UIViewController {
         (UIApplication.sharedApplication().delegate
             as! AppDelegate).managedObjectContext
         
-        
+      /*
         var entityDescription =
         NSEntityDescription.entityForName("Memberinfo",
             inManagedObjectContext: managedObjectContext!)
         
-       /* var memberinfo = Memberinfo(entity: entityDescription!,
-            insertIntoManagedObjectContext: managedObjectContext)*/
+    var memberinfo = Memberinfo(entity: entityDescription!,
+            insertIntoManagedObjectContext: managedObjectContext)
         
-        
+
         let request = NSFetchRequest()
         request.entity = entityDescription
-        
+
        // let pred = NSPredicate(format: "(email = %@)", email.text)
        // request.predicate = pred
         
@@ -84,7 +94,7 @@ class ViewController: UIViewController {
         
         
         
-       
+       */
         
         
         
